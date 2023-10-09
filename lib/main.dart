@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cf_tube/screen/home_screen.dart';
 
-void main() async {
-
+void main() {
+  runApp(
+    MaterialApp(
+      home: HomeScreen(),
+    ),
+  );
 }

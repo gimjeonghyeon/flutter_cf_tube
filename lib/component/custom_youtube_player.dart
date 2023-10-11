@@ -18,9 +18,50 @@ class CustomYoutubePlayer extends StatefulWidget {
 }
 
 class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
+  YoutubePlayerController? controller;  // null이 들어갈 수 있게 선언
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = YoutubePlayerController(     // 컨트롤러 선언
+        initialVideoId: widget.videoModel.id, // 처음 실행할 동영상의 아이디
+        flags: YoutubePlayerFlags(
+          autoPlay: false, // 자동 실행 사용하지 않기
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // 임시로 기본 컨테이너 반환
-    return Container();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          YoutubePlayer( // 유튜브 재생기 렌더링
+            controller: controller!,  // ! : null 값이 아니라는 걸 알려주는 키워드
+            showVideoProgressIndicator: true,
+          ),
+          const SizedBox(height: 16.0),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              widget.videoModel.title, // 동영상 제목
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16.0),
+        ],
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    controller!.dispose(); // State 폐기 시 컨트롤러 또한 폐기
   }
 }

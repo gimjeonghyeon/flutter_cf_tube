@@ -15,8 +15,6 @@ class YoutubeRepository {
       }
     );
 
-    print(resp);
-
     final listWithData = resp.data['items'].where(
         (item) =>
             item?['id']?['videoId'] != null && item?['snippet']?['title'] != null,
